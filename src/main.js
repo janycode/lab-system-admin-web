@@ -9,6 +9,7 @@ import 'element-plus/dist/index.css'   //导入 element-plus 样式
 import Particles from "@tsparticles/vue3";
 import { loadFull } from "tsparticles";
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import './util/axios.config' //导入 axios 配置（拦截器）
 
 const pinia = createPinia()
 pinia.use(piniaPluginPersistedstate)

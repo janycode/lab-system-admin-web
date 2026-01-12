@@ -5,6 +5,8 @@ import RouteConfig from '../router/config'
 import { useRouterStore } from '../store/useRouterStore'
 import NotFound from '../views/notfound/NotFound.vue'
 import { useUserStore } from '../store/useUserStore'
+import NProgress from 'nprogress' //[模块化]引入进度条
+import 'nprogress/nprogress.css'  //[模块化]引入进度条样式
 
 const routes = [
     {
@@ -31,6 +33,8 @@ const router = createRouter({
 
 // 路由拦截
 router.beforeEach((to, from, next) => {
+    NProgress.start()  // 进入路由前 加载进度条
+
     const { isGetterRouter } = useRouterStore()
     const { user } = useUserStore()
     // 如果跳转是 login 就放行
@@ -54,6 +58,9 @@ router.beforeEach((to, from, next) => {
             }
         }
     }
+})
+router.afterEach(() => {
+    NProgress.done()  // 进入路由后 关闭进度条
 })
 
 // 在 mainbox 下都写成孩子路由，用数组的方式加入路由
