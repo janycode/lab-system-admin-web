@@ -70,10 +70,7 @@ import { onMounted, ref, computed } from "vue"
 import { classTypes, bookStateType, bookStateText } from "../../util/type"
 import LabMap from "../../components/lab-manage/LabMap.vue"
 import { ElMessage } from "element-plus"
-import { useUserStore } from "../../store/useUserStore"
 import moment from 'moment'
-
-const userStore = useUserStore()
 
 onMounted(() => {
     getList()
@@ -94,12 +91,6 @@ const dialogVisible = ref(false)
 const handlePreview = (item) => {
     dialogVisible.value = true
     currentItem.value = item.lab  //预览的是实验室 lab 不是 item
-}
-
-// 撤销操作
-const handleDelete = async ({ id }) => {
-    const res = await axios.delete(`/admin/books/${id}`)
-    commonMessage(res)
 }
 
 // 通用 Message 组件：成功(+刷新列表) or 失败
