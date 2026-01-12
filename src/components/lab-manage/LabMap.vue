@@ -8,6 +8,7 @@
 import { onMounted, nextTick, ref, computed } from "vue"
 import { ImageLayer, Scene, PointLayer } from "@antv/l7"
 import { Map } from "@antv/l7-maps"
+import { bgUrl } from "../../util/url.config"
 
 //接收父传子字段
 const props = defineProps(["x", "y", "t"])
@@ -41,7 +42,7 @@ onMounted(() => {
     scene.setBgColor("rgb(94, 182, 140)")
 
     //背景图片层
-    const imagelayer = new ImageLayer({}).source("/bg.jpg", {
+    const imagelayer = new ImageLayer({}).source(bgUrl, {
       parser: {
         type: "image",
         extent: [360, 400, 640, 600],

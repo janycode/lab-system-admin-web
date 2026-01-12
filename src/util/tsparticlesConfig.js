@@ -1,10 +1,12 @@
+import { bgUrl } from "./url.config";
+
 export const tsparticlesConfig = {
     "autoPlay": true,
     "background": {
         "color": {
             "value": "#043564"
         },
-        "image": "url('./bg.jpg')",
+        "image": "url(" + bgUrl + ")",
         "position": "center",
         "repeat": "no-repeat",
         "size": "cover",

@@ -42,6 +42,7 @@ import { Map } from "@antv/l7-maps"
 import { collegeTypes, labTypes } from "../../util/type"
 import axios from "axios"
 import { ElMessage } from "element-plus"
+import { bgUrl } from "../../util/url.config"
 
 let scene, popup
 onMounted(() => {
@@ -71,7 +72,7 @@ onMounted(() => {
   const mapInstance = scene.getMap ? scene.getMap() : scene.map
 
   //背景图片层
-  const imagelayer = new ImageLayer({}).source("/bg.jpg", {
+  const imagelayer = new ImageLayer({}).source(bgUrl, {
     parser: {
       type: "image",
       extent: [360, 400, 640, 600],

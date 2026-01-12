@@ -8,26 +8,15 @@
       <el-form ref="addFormRef" :model="addForm" :rules="rules" label-width="100px" class="ruleForm" status-icon>
         <el-form-item label="预约日期" prop="bookTime">
           <!-- DatePicker 日期选择器组件，中文日期涉及国际化配置: https://element-plus.org/zh-CN/guide/i18n -->
-          <el-date-picker
-            v-model="addForm.bookTime"
-            type="date"
-            placeholder="请选择日期"
-            style="width: 100%"
-            :disabled-date="disabledDate"
-            @change="handleDateChange"
-          />
+          <el-date-picker v-model="addForm.bookTime" type="date" placeholder="请选择日期" style="width: 100%"
+            :disabled-date="disabledDate" @change="handleDateChange" />
         </el-form-item>
         <!-- select 选择器组件：用于选择角色下拉框 -->
         <el-form-item label="预约课节" prop="bookClass">
           <el-select v-model="addForm.bookClass" placeholder="请选择预约课节" style="width: 100%">
             <!-- 禁用 :disabled 判断数组包含的选项就禁用掉，禁用的是已被选择的 -->
-            <el-option
-              v-for="item in classTypes"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-              :disabled="disableSelect.includes(item.value)"
-            />
+            <el-option v-for="item in classTypes" :key="item.value" :label="item.label" :value="item.value"
+              :disabled="disableSelect.includes(item.value)" />
           </el-select>
         </el-form-item>
         <el-form-item label="预约原因" prop="bookReason">
@@ -52,6 +41,7 @@ import { ElMessage } from "element-plus"
 import { onMounted, reactive, ref } from "vue"
 import { classTypes } from "../../util/type"
 import { useUserStore } from "../../store/useUserStore"
+import { bgUrl } from "../../util/url.config"
 const userStore = useUserStore()
 
 let scene
@@ -79,7 +69,7 @@ onMounted(() => {
   scene.setBgColor("rgb(94, 182, 140)")
 
   //背景图片层
-  const imagelayer = new ImageLayer({}).source("/bg.jpg", {
+  const imagelayer = new ImageLayer({}).source(bgUrl, {
     parser: {
       type: "image",
       extent: [360, 400, 640, 600],

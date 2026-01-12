@@ -10,6 +10,7 @@ import axios from "axios"
 import moment from "moment"
 import { onMounted } from "vue"
 import { classTypes, bookStateText } from "../../util/type"
+import { bgUrl } from "../../util/url.config"
 
 let scene, popup
 onMounted(() => {
@@ -36,7 +37,7 @@ onMounted(() => {
     scene.setBgColor("rgb(94, 182, 140)")
 
     //背景图片层
-    const imagelayer = new ImageLayer({}).source("/bg.jpg", {
+    const imagelayer = new ImageLayer({}).source(bgUrl, {
         parser: {
             type: "image",
             extent: [360, 400, 640, 600],
