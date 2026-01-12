@@ -7,7 +7,7 @@ axios.interceptors.request.use(function (config) {
     console.log("请求之前");
 
     //创建 loading 框
-    loadingInstance = ElLoading.service({ fullscreen: true })
+    //loadingInstance = ElLoading.service({ fullscreen: true })
 
     //所有请求都携带上 localStorage 中的 token
     const token = localStorage.getItem("token")
@@ -26,7 +26,7 @@ axios.interceptors.response.use(function (response) {
     res?.data?.token && localStorage.setItem("token", res?.data?.token)
 
     // 关闭 loading 框
-    loadingInstance?.close()
+    //loadingInstance?.close()
 
     return response;
 }, function (error) {
