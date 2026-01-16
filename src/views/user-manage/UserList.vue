@@ -15,21 +15,11 @@
     <!-- 按钮也使用：自定义表单 -->
     <el-table-column label="操作" min-width="200">
       <template #default="scope">
-        <el-button
-          size="small"
-          type="primary"
-          round
-          @click="handleUpdate(scope.row)"
-          :disabled="scope.row.isDefault ? true : false"
-          >更新</el-button
-        >
+        <el-button size="small" type="primary" round @click="handleUpdate(scope.row)"
+          :disabled="scope.row.isDefault ? true : false">更新</el-button>
         <!-- popconfirm 气泡确认框 -->
-        <el-popconfirm
-          title="你确定要删除吗?"
-          @confirm="handleDelete(scope.row.id)"
-          confirm-button-text="确定"
-          cancel-button-text="取消"
-        >
+        <el-popconfirm title="你确定要删除吗?" @confirm="handleDelete(scope.row.id)" confirm-button-text="确定"
+          cancel-button-text="取消">
           <template #reference>
             <el-button size="small" type="danger" round :disabled="scope.row.isDefault ? true : false">删除</el-button>
           </template>
@@ -37,6 +27,13 @@
       </template>
     </el-table-column>
   </el-table>
+
+  <!-- 分页组件 -->
+  <div style="margin-top: 20px; float: right;">
+    <el-pagination v-model:current-page="pagination.currentPage" v-model:page-size="pagination.pageSize"
+      :page-sizes="[10, 20, 50, 100]" :total="pagination.total" layout="total, sizes, prev, pager, next, jumper"
+      @size-change="handleSizeChange" @current-change="handleCurrentChange" />
+  </div>
 
   <!-- dialog 对话框组件-新增 -->
   <el-dialog v-model="dialogVisible" title="添加用户" width="500px">
@@ -96,6 +93,25 @@ import { onMounted, reactive, ref, nextTick } from "vue"
 import axios from "axios"
 import { ElMessage } from "element-plus"
 
+/* -------------------- 分页配置 start -------------------- */
+const loading = ref(false)
+// 分页参数
+const pagination = reactive({
+  currentPage: 1, // 当前页码
+  pageSize: 10,   // 每页条数
+  total: 0        // 总条数
+})
+// 页码改变事件
+const handleCurrentChange = () => {
+  getList()
+}
+// 每页条数改变事件
+const handleSizeChange = () => {
+  pagination.currentPage = 1 // 重置页码为1
+  getList()
+}
+/* -------------------- 分页配置 end -------------------- */
+
 /* -------------------- 列表 start -------------------- */
 const tableData = ref([])
 const roleList = ref([])
@@ -103,10 +119,26 @@ onMounted(() => {
   getList()
   getRoleList()
 })
+// 改造列表请求：添加分页参数
 const getList = async () => {
-  let res = await axios.get("/admin/users/list")
-  console.log("res.data users->", res.data)
-  tableData.value = res.data
+  loading.value = true
+  try {
+    const res = await axios.get("/admin/users/listPage", {
+      params: {
+        pageNum: pagination.currentPage,
+        pageSize: pagination.pageSize
+      }
+    })
+    console.log("res.data users->", res.data)
+    // 假设接口返回格式：{ list: [], total: 0 }
+    tableData.value = res.data.list
+    pagination.total = res.data.total
+  } catch (err) {
+    ElMessage.error("获取列表失败")
+    console.error(err)
+  } finally {
+    loading.value = false
+  }
 }
 /* -------------------- 列表 end -------------------- */
 
