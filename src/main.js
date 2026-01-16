@@ -27,3 +27,9 @@ createApp(App)
         },
     })
     .mount('#app')
+
+// 开发/测试环境打印日志（放 main.js 末尾验证 OK）
+if (import.meta.env.VITE_OPEN_DEBUG) {
+    console.log('当前环境：', import.meta.env.VITE_ENV_NAME)
+    console.log('BASE_URL：', import.meta.env.VITE_API_BASE_URL)
+}

@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "test": "vite --mode test",
+    "testbuild": "vite build --mode test",
+    "testpreview": "vite preview --outDir dist-test --port 8080",
     "build": "vite build",
     "preview": "vite preview"
   },
